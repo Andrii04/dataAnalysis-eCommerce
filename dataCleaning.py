@@ -26,4 +26,17 @@ df["Country"] = df["Country"].astype("string")
 
 #print(df.dtypes)
 print(df.info())
+
+# Data Quality Checks
+print("\n--- Null values per column ---")
+print(df.isnull().sum())
+
+num_duplicates = df.duplicated().sum()
+print(f"\n--- Number of duplicated rows: {num_duplicates}")
+
+print("\n--- Outlier check: Quantity and UnitPrice ---")
+print("Quantity min:", df["Quantity"].min(), "max:", df["Quantity"].max())
+print("UnitPrice min:", df["UnitPrice"].min(), "max:", df["UnitPrice"].max())
+
+
 df.to_csv("OnlineRetail_cleaned.csv", index=False)
