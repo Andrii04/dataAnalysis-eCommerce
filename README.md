@@ -58,7 +58,7 @@ The project includes three visualizations:
 - `dataCleaning.py`: Data cleaning and quality checks
 - `dataVisualization.py`: Data extraction, analysis, and visualization
 - `db_config.py`: Database connection configuration
-- `onlineRetail.sql`: SQL queries for exploration and aggregation
+- `analysis_queries.sql`: SQL queries for exploration and aggregation
 - `OnlineRetailCSV.csv` / `OnlineRetail_cleaned.csv`: Raw and cleaned datasets
 - Visualization images:
 	- `Top 10 Most Sold Products.png`
