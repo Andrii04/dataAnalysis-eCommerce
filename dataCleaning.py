@@ -1,33 +1,21 @@
+
 import pandas as pd
 
+# 1. Load Data
 df = pd.read_csv("OnlineRetailCSV.csv")
 
-#print(df.dtypes())
-mask = df["InvoiceNo"].astype(str).str.contains(r"\D")
-correct_valsInvoice = df.loc[mask, "InvoiceNo"].astype(str).str[1:]
-
-Cvals = df.loc[df["InvoiceNo"].astype(str).str[::] == "C537413"]
-vals = df.loc[df["InvoiceNo"].astype(str).str[::] == "537413"]
-#print(Cvals.head())
-#print(vals.head())
-
-#print(df.dtypes)
-#print(df["InvoiceNo"].head())
+# 2. Data Type Conversion
+# Convert relevant columns to appropriate types for analysis
 df["InvoiceNo"] = df["InvoiceNo"].astype("string")
-#print(df["StockCode".head()])
 df["StockCode"] = df["StockCode"].astype("string")
 df["Description"] = df["Description"].astype("string")
-#print(df["InvoiceDate"].head())
 df["InvoiceDate"] = pd.to_datetime(df["InvoiceDate"], errors="coerce")
-#print(df["InvoiceDate"].head())
-#print(df["InvoiceDate"].isna().any())
-#print(df.dtypes)
 df["Country"] = df["Country"].astype("string")
 
-#print(df.dtypes)
+# 3. Data Quality Checks
+print("\n===== DATASET OVERVIEW =====")
 print(df.info())
 
-# Data Quality Checks
 print("\n--- Null values per column ---")
 print(df.isnull().sum())
 
@@ -35,8 +23,21 @@ num_duplicates = df.duplicated().sum()
 print(f"\n--- Number of duplicated rows: {num_duplicates}")
 
 print("\n--- Outlier check: Quantity and UnitPrice ---")
-print("Quantity min:", df["Quantity"].min(), "max:", df["Quantity"].max())
-print("UnitPrice min:", df["UnitPrice"].min(), "max:", df["UnitPrice"].max())
+print(f"Quantity: min = {df['Quantity'].min()}, max = {df['Quantity'].max()}")
+print(f"UnitPrice: min = {df['UnitPrice'].min()}, max = {df['UnitPrice'].max()}")
 
+# Remove duplicates
+# df = df.drop_duplicates()
 
+# Handle missing values 
+# df = df.dropna()
+
+# 4. Identify Canceled Invoices
+# Canceled invoices typically start with 'C'.
+canceled_mask = df["InvoiceNo"].str.startswith("C")
+canceled_invoices = df.loc[canceled_mask]
+# print(canceled_invoices.head())
+
+# 5. Export Cleaned Data
 df.to_csv("OnlineRetail_cleaned.csv", index=False)
+print("\nCleaned data exported to 'OnlineRetail_cleaned.csv'.")
